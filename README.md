@@ -8,8 +8,8 @@
 # 2) It will plot these baseline corrected values of Intensity against Time(min) 
 # 3) Lastly, it will save each plot as the name of the file with .pdf added to the end
 
-# To generate these plot, do the following steps:
-# 1) Upload all csv files as its own folder 
+# To generate these plots, do the following steps:
+# 1) Upload all csv files as its own folder (zip file is easiest)
 # 2) Copy both "Light_scatter.R" and "Plot_light_scatter.sh" to the folder containing the csv files
 # 3) Once in directory containing your csv files and two scripts, use the command 'bash Plot_light_scatter.sh' to generate      plots of each csv file as a pdf
 
