@@ -1,0 +1,1 @@
+for filename in *csv; do Rscript Light_scatter.R $filename; done
