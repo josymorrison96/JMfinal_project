@@ -5,7 +5,7 @@
 
 # Utilizing the scripts in this repository will generate the following for ease of analysis (with examples provided in Light_scatter_data folder):
 # 1) A baseline corrected column of Intensity (A.U) (subtracts first Intensity value from all other Intensity values for each   csv file) 
-# 2) It will plot these baseline corrected values of Intensity against Time(min) 
+# 2) It will plot Time(min) against these baseline corrected values of Intensity 
 # 3) Lastly, it will save each plot as the name of the file with .pdf added to the end
 
 # To generate these plots, do the following steps:
