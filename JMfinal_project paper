@@ -5,11 +5,53 @@ Dr. Schwartz
 
                               Automation/analysis and plotting of csv files relevant for my research
                               
-	In my research laboratory, we elucidate the molecular mechanisms behind protein interactions involved in cell division in bacteria using Escherichia coli as a model system. This research relies on doing many biophysical assays utilizing purified proteins in order to provide mechanistic insight into how these proteins interact. One such of these assays that I utilize perhaps the most commonly is 90º light scatter. This assay essentially shines a laser through a cuvette in which our reaction of choice takes place, and it measures increases in light scatter which may occur, for example, with the assembly of large protein complexes, as time progresses. The output from this assay is a csv file that contains two columns: Time (min) and Light scatter (arbitrary units or A.U.).
-	Generally, I have exported this csv file and used Microsoft Excel to 1) Subtract the first value of the Intensity (A.U.) from all other Intensity (A.U.) values so as to start each plot at zero (called the baseline subtracted values), and 2) to plot each individual dataset as a graph, however this can become cumbersome when having to export many csv files and I wanted a quicker and more efficient system to do this.
-	I decided to create an Rscript called Light_scatter.R for analyzing csv files to 1) subtract the first value of the Intensity (A.U.) from all other Intensity (A.U.) values to create my desired baseline of zero, then 2) create a graph of Time (min) plotted against the baseline subtracted Intensity (A.U.) values with appropriate labels, and lastly 3) to save the plot as a .pdf file. I first used the read.csv function to read the csv file and then I used the mutate function to enable the subtraction of the first value of the Intensity (A.U.) from all other Intensity (A.U.) values in the csv file and created a new data frame for those values(Light_scatter_baseline_corrected). Next, I created a new data frame for a ggplot in which I used Time (min) and the baseline corrected values of Intensity (A.U.) from the Light_scatter_baseline_corrected data and plotted these values as a line with appropriate labels and arbitrary x and y limits set by a brief glance at the Light_scatter_baseline_corrected data. Lastly, I used the ggsave and paste0 functions to save the previously made data frame of the ggplot as the same name but as a .pdf file. 
-	After creating an Rscript doing the functions I desired as described above, I wanted to be able to run this Rscript on many csv files at once so that .pdf graphs could be generated for as many csv files as I wanted. To do this, I wrote a simple “for” loop in command line that specified running the Rscript Light_scatter.R on all csv files in the current directory and then I saved this loop as a shell script (Plot_light_scatter.sh). This would enable me to simply write the command ‘bash Plot_light_scatter.sh’ and if both the scripts Plot_light_scatter.sh and Light_scatter.R were in the directory all the csv files in the current working directory would be subtracted out for baseline, plotted Time (min) against the baseline subtracted values of Intensity (A.U.), and saved as .pdf files.
-	In order to allow the Rscript to be utilized by the “for” loop in command line for each csv file in the directory, I made sure that I went back and added the commandArgs function to extract all command line arguments and return them as a vector. This enabled each csv file in the directory to actually be run through the Light_scatter.R script so that I could obtain graphs of each csv file. 
-	Although I had already tested these scripts, to ensure full working capability of the the scripts I grabbed some sample experimental data sets that I had (experiments 1-15 .csv) and imported them as a zip file(Light_scatter_data) as a folder into a directory that I had connected to a repository on GitHub (Directory = Light_scatter, repository = JMfinal_project). I next simply copied the scripts Light_scatter.R and Plot_light_scatter.sh into the Light_scatter_data folder, changed my working directory to Light_scatter_data, and then ran the command ‘bash Plot_light_scatter.sh’ in command line. The result generated a plot of each experiment as a .pdf file with the baseline subtracted values plotted which was exactly what I was looking for. 
-	Although I realize now I should have been saving these to a repository from the beginning, I used my repository (JMfinal_project) and transferred all the csv files, pdfs, and .R and .sh scripts to the repository from Rstudio so the anyone that wishes (especially in my lab) could use my scripts to generate efficient plots. The README file contains all relevant information for what the purpose of the repository is and how to use the scripts contained in the repository to generate the desired graphs and the scripts themselves contain information about what each command within the script does. 
-	Lastly, because plots had been generated for all csv files, I simply looked at the resulting graphs for trends and desired information as an example. I determined that experiment 2 and experiment 4 were apparently the same file and had the most rapid increase in light scatter after the addition of protein complex assembly reagent at minute 5 and experiments 10-12 especially appeared defective for light scatter increase after the addition of protein complex assembly reagent compared to the remainder of the experiment.csv files. These conclusions could be made quickly and decisively because of this more high-throughput way of subtracting baseline values and plotting each csv file. In the future, I will continue to use this repository for much quicker analysis on my light scatter data and I will likely modify the script so that I can utilize it for other data sets that generate csv files.
+		In my research laboratory, we elucidate the molecular mechanisms behind protein interactions involved in cell division in
+	bacteria using Escherichia coli as a model system. This research relies on doing many biophysical assays utilizing purified 
+	proteins in order to provide mechanistic insight into how these proteins interact. One such of these assays that I utilize perhaps
+	the most commonly is 90º light scatter. This assay essentially shines a laser through a cuvette in which our reaction of choice 
+	takes place, and it measures increases in light scatter which may occur, for example, with the assembly of large protein complexes, as time
+	progresses. The output from this assay is a csv file that contains two columns: Time (min) and Light scatter (arbitrary units 
+	or A.U.).
+		Generally, I have exported this csv file and used Microsoft Excel to 1) Subtract the first value of the Intensity (A.U.) 
+	from all other Intensity (A.U.) values so as to start each plot at zero (called the baseline subtracted values), and 2) to plot
+	each individual dataset as a graph, however this can become cumbersome when having to export many csv files and I wanted a quicker
+	and more efficient system to do this.
+		I decided to create an Rscript called Light_scatter.R for analyzing csv files to 1) subtract the first value of the 
+	Intensity (A.U.) from all other Intensity (A.U.) values to create my desired baseline of zero, then 2) create a graph of Time (min) plotted
+	against the baseline subtracted Intensity (A.U.) values with appropriate labels, and lastly 3) to save the plot as a .pdf file. 
+	I first used the read.csv function to read the csv file and then I used the mutate function to enable the subtraction of the first
+	value of the Intensity (A.U.) from all other Intensity (A.U.) values in the csv file and created a new data frame for those 
+	values(Light_scatter_baseline_corrected). Next, I created a new data frame for a ggplot in which I used Time (min) and the baseline
+	corrected values of Intensity (A.U.) from the Light_scatter_baseline_corrected data and plotted these values as a line with
+	appropriate labels and arbitrary x and y limits set by a brief glance at the Light_scatter_baseline_corrected data. Lastly, 
+	I used the ggsave and paste0 functions to save the previously made data frame of the ggplot as the same name but as a .pdf file. 
+		After creating an Rscript doing the functions I desired as described above, I wanted to be able to run this Rscript on many csv
+	files at once so that .pdf graphs could be generated for as many csv files as I wanted. To do this, I wrote a simple “for” loop
+	in command line that specified running the Rscript Light_scatter.R on all csv files in the current directory and then I saved 
+	this loop as a shell script (Plot_light_scatter.sh). This would enable me to simply write the command ‘bash Plot_light_scatter.sh’
+	and if both the scripts Plot_light_scatter.sh and Light_scatter.R were in the directory all the csv files in the current working
+	directory would be subtracted out for baseline, plotted Time (min) against the baseline subtracted values of Intensity (A.U.),
+	and saved as .pdf files.
+		In order to allow the Rscript to be utilized by the “for” loop in command line for each csv file in the directory, I made
+	sure that I went back and added the commandArgs function to extract all command line arguments and return them as a vector. This 
+	enabled each csv file in the directory to actually be run through the Light_scatter.R script so that I could obtain graphs of each
+	csv file. 
+		Although I had already tested these scripts, to ensure full working capability of the the scripts I grabbed some sample 
+	experimental data sets that I had (experiments 1-15 .csv) and imported them as a zip file(Light_scatter_data) as a folder into a
+	directory that I had connected to a repository on GitHub (Directory = Light_scatter, repository = JMfinal_project). I next simply 
+	copied the scripts Light_scatter.R and Plot_light_scatter.sh into the Light_scatter_data folder, changed my working directory to
+	Light_scatter_data, and then ran the command ‘bash Plot_light_scatter.sh’ in command line. The result generated a plot of each
+	experiment as a .pdf file with the baseline subtracted values plotted which was exactly what I was looking for. 
+	Although I realize now I should have been saving these to a repository from the beginning, I used my repository (JMfinal_project)
+	and transferred all the csv files, pdfs, and .R and .sh scripts to the repository from Rstudio so the anyone that wishes 
+	(especially in my lab) could use my scripts to generate efficient plots. The README file contains all relevant information for
+	what the purpose of the repository is and how to use the scripts contained in the repository to generate the desired graphs and
+	the scripts themselves contain information about what each command within the script does. 
+		Lastly, because plots had been generated for all csv files, I simply looked at the resulting graphs for trends and desired 
+	information as an example. I determined that experiment 2 and experiment 4 were apparently the same file and had the most
+	rapid increase in light scatter after the addition of protein complex assembly reagent at minute 5 and experiments 10-12
+	especially appeared defective for light scatter increase after the addition of protein complex assembly reagent compared to the
+	remainder of the experiment.csv files. These conclusions could be made quickly and decisively because of this more high-throughput
+	way of subtracting baseline values and plotting each csv file. In the future, I will continue to use this repository for
+	much quicker analysis on my light scatter data and I will likely modify the script so that I can utilize it for other data 
+	sets that generate csv files.
